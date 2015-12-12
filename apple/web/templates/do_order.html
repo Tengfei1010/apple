@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if current_user.is_authenticated %}
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="/my_order" class="navbar-brand">我的订单</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
+                    <p class="navbar-text navbar-right">
+                        欢迎！{{ current_user.username }}，<a href="/login_out">退出</a>
+                    </p>
+                </div>
+            </div>
+        </nav>
+        {% if error_msg %}
+            <div class="alert alert-warning">
+                {{ error_msg }}
+            </div>
+        {% endif %}
+        <form action="/order" method="post">
+            <div class="form-group">
+                <label>联系方式:</label>
+                <input type="text" class="form-control" required name="phone" placeholder="手机号">
+            </div>
+            <div class="form-group">
+                <label>地址:</label>
+                <input type="text" class="form-control" required name="address" placeholder="宿舍楼或者实验室">
+            </div>
+            <div class="form-group">
+                <label>数量:</label>
+                <input type="text" class="form-control" required name="amount" placeholder="个数">
+            </div>
+            <div class="form-group">
+                <label>选择类型：</label>
+                <br/>
+                <input type="radio" name="type" value="1" checked="checked"> 75mm <img src="/static/img/101.jpg">
+
+                <div style="margin-top: 10px;"></div>
+                <br/>
+                <input type="radio" name="type" value="2"> 85mm <img src="/static/img/101.jpg">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">提交</button>
+        </form>
+    </div>
+{% endif %}
+</body>
+</html>

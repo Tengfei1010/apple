@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if current_user.is_authenticated %}
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/order" class="navbar-brand">继续下单</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
+                <p class="navbar-text navbar-right">欢迎！{{ current_user.username }} </p>
+            </div>
+        </div>
+    </nav>
+    {% if error_msg %}
+        <div class="alert alert-warning">
+            {{ error_msg }}
+        </div>
+    {% endif %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>联系方式：</th>
+                    <th>地址：</th>
+                    <th>数量：</th>
+                    <th>类型：</th>
+                    <th>状态：</th>
+                    <th>操作：</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1111</td>
+                <td>1111</td>
+                <td>1</td>
+                <td>75mm</td>
+                <td>未交货</td>
+                <td><a href="">取消</a></td>
+            </tr>
+            <tr>
+                <td>1111</td>
+                <td>1111</td>
+                <td>1</td>
+                <td>75mm</td>
+                <td>成功</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>1111</td>
+                <td>1111</td>
+                <td>1</td>
+                <td>75mm</td>
+                <td>已取消</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" action="/login" method="post">
+        <h4 class="form-signin-heading">请登录</h4>
+        <label for="inputEmail" class="sr-only">用户名</label>
+        <input class="form-control" placeholder="用户名" name="username" autofocus="">
+
+        <div style="margin-top: 10px;"></div>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" class="form-control" name="password" placeholder="密码">
+
+        <div style="margin-top: 10px;"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+    <div style="margin-top: 10px;"></div>
+    {% if error_msg %}
+        <div class="alert alert-warning">
+            {{ error_msg }}
+        </div>
+    {% endif %}
+    <div class="well">
+        <span>登录之后，可以下单！ 没有帐号，请<a href="/register">注册</a>。您也可以直接浏览<a href="/detail">详情</a></span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+    <div class="alert alert-success" role="alert">
+        {% if current_user.is_authenticated %}
+            恭喜，{{ current_user.username }}  下单成功！ 订单号为：{{ order_id }}. <a href="/my_order">查看订单</a>
+        {% endif %}
+
+    </div>
+    </div>
+</body>
+</html>
