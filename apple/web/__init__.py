@@ -10,7 +10,6 @@ import pymongo
 from bson.objectid import ObjectId
 from flask import Flask, render_template, request, redirect, url_for
 import flask.ext.login as flask_login
-
 from flask.ext.login import login_user, login_required
 
 from flask.ext.login import logout_user, current_user
@@ -74,21 +73,33 @@ def order():
 
     else:
         phone = request.form.get('phone', None)
-        amount = request.form.get('amount', None)
         address = request.form.get('address', None)
-        apple_type = request.form.get('type', None)
+        quantity1 = request.form.get('quantity1', None)
+        quantity2 = request.form.get('quantity2', None)
+        quantity3 = request.form.get('quantity3', None)
+        quantity4 = request.form.get('quantity4', None)
 
-        if not phone or not amount or not address:
-            return render_template('do_order.html', error_msg='所有项必填！')
+        if not (quantity1 and quantity2 and quantity3 and quantity4):
+            return render_template('do_order.html', error_msg=u'类型数量不能为零！')
+        if not phone or not address:
+            return render_template('do_order.html', error_msg=u'所有项必填！')
 
+        amount = dict()
+        if quantity1 or quantity1 == '0':
+            amount['quantity1'] = quantity1
+        if quantity2 or quantity2 == '0':
+            amount['quantity2'] = quantity2
+        if quantity3 or quantity3 == '0':
+            amount['quantity3'] = quantity3
+        if quantity4 or quantity4 == '0':
+            amount['quantity4'] = quantity4
         # save order to db
         save_value = {
             'username': current_user.username,
             'create_at': datetime.datetime.now(),
             'phone': phone,
-            'amount': amount,
             'address': address,
-            'apple_type': apple_type,
+            'amount': amount,
             'status': STATUS['created']
         }
         save_result = session.insert_one(ORDER_COLLECTION, save_value)
@@ -99,8 +110,11 @@ def order():
 @app.route('/my_order', methods=['GET'])
 def my_order():
     cur_user = current_user
-    orders = session.query_all(ORDER_COLLECTION,
-                               {'username': cur_user.username})
+    orders = session.query_all(
+        ORDER_COLLECTION,
+        {'username': cur_user.username}).sort(
+        "create_at",
+        pymongo.DESCENDING)
 
     results = []
     for order in orders:

@@ -45,7 +45,19 @@
             <tr>
                 <td>{{ order['phone'] }}</td>
                 <td>{{ order['address'] }}</td>
-                <td>{{ order['amount'] }}</td>
+                <td>
+                    {% for key in order['amount'] %}
+                        {% if key == 'quantity1' %}
+                        包装1： {{ order['amount'][key] }} ;
+                        {% elif key == 'quantity2' %}
+                        包装2： {{ order['amount'][key] }} ;
+                        {% elif key == 'quantity3' %}
+                        包装3： {{ order['amount'][key] }} ;
+                        {% else %}
+                        包装4： {{ order['amount'][key] }} ;
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td>{{ order['type'] }}</td>
                 <td>{{ order['status_txt'] }}</td>
                 <td>

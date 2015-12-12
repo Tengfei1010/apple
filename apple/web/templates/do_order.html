@@ -9,6 +9,23 @@
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <script src="/static/bootstrap/js/jquery.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        .qty {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+
+        input.qtyplus {
+            width: 50px;
+            height: 50px;
+        }
+
+        input.qtyminus {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
 {% if current_user.is_authenticated %}
@@ -33,28 +50,101 @@
         <form action="/order" method="post">
             <div class="form-group">
                 <label>联系方式:</label>
-                <input type="text" class="form-control" required name="phone" placeholder="手机号">
+                <input type="text" class="form-control" required name="phone" placeholder="手机号或者微信号">
             </div>
             <div class="form-group">
                 <label>地址:</label>
                 <input type="text" class="form-control" required name="address" placeholder="宿舍楼或者实验室">
             </div>
             <div class="form-group">
-                <label>数量:</label>
-                <input type="text" class="form-control" required name="amount" placeholder="个数">
-            </div>
-            <div class="form-group">
                 <label>选择类型：</label>
-                <br/>
-                <input type="radio" name="type" value="1" checked="checked"> 75mm <img src="/static/img/101.jpg">
 
-                <div style="margin-top: 10px;"></div>
-                <br/>
-                <input type="radio" name="type" value="2"> 85mm <img src="/static/img/101.jpg">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img class="img-thumbnail" src="/static/img/101.jpg">
+                        <label>包装1</label>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 20px;">
+                        <input type='button' value='-' class='qtyminus' field='quantity1'/>
+                        <input type='text' name='quantity1' value='0' class='qty'/>
+                        <input type='button' value='+' class='qtyplus' field='quantity1'/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img class="img-thumbnail" src="/static/img/101.jpg">
+                        <label>包装2</label>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 20px;">
+                        <input type='button' value='-' class='qtyminus' field='quantity2'/>
+                        <input type='text' name='quantity2' value='0' class='qty'/>
+                        <input type='button' value='+' class='qtyplus' field='quantity2'/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img class="img-thumbnail" src="/static/img/101.jpg">
+                        <label>包装3</label>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 20px;">
+                        <input type='button' value='-' class='qtyminus' field='quantity3'/>
+                        <input type='text' name='quantity3' value='0' class='qty'/>
+                        <input type='button' value='+' class='qtyplus' field='quantity3'/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img class="img-thumbnail" src="/static/img/101.jpg">
+                        <label>包装4</label>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 20px;">
+                        <input type='button' value='-' class='qtyminus' field='quantity4'/>
+                        <input type='text' name='quantity4' value='0' class='qty'/>
+                        <input type='button' value='+' class='qtyplus' field='quantity4'/>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">提交</button>
         </form>
     </div>
 {% endif %}
 </body>
+<script>
+    jQuery(document).ready(function () {
+        // This button will increment the value
+        $('.qtyplus').click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            fieldName = $(this).attr('field');
+            // Get its current value
+            var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+            // If is not undefined
+            if (!isNaN(currentVal)) {
+                // Increment
+                $('input[name=' + fieldName + ']').val(currentVal + 1);
+            } else {
+                // Otherwise put a 0 there
+                $('input[name=' + fieldName + ']').val(0);
+            }
+        });
+        // This button will decrement the value till 0
+        $(".qtyminus").click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            fieldName = $(this).attr('field');
+            // Get its current value
+            var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+            // If it isn't undefined or its greater than 0
+            if (!isNaN(currentVal) && currentVal > 0) {
+                // Decrement one
+                $('input[name=' + fieldName + ']').val(currentVal - 1);
+            } else {
+                // Otherwise put a 0 there
+                $('input[name=' + fieldName + ']').val(0);
+            }
+        });
+    });
+</script>
 </html>
