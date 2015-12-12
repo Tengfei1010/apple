@@ -49,7 +49,7 @@ def login():
     # check user name and password
     _result = session.query_one(USER_COLLECTION, {'username': username})
 
-    if _result['password'] != hashlib.md5(password).hexdigest():
+    if not _result or _result['password'] != hashlib.md5(password).hexdigest():
         error_msg = u'登录密码错误!'
         return render_template('login.html', error_msg=error_msg)
     else:
