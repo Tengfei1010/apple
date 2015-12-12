@@ -11,27 +11,10 @@
 </head>
 <body>
 <div class="container">
-    {% if current_user.is_authenticated %}
-
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a href="/order" class="navbar-brand">继续下单</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
-                    <p class="navbar-text navbar-right">欢迎！{{ current_user.username }} </p>
-                </div>
-            </div>
-        </nav>
-        {% if error_msg %}
-            <div class="alert alert-warning">
-                {{ error_msg }}
-            </div>
-        {% endif %}
-    {% endif %}
     <table class="table table-bordered">
         <thead>
         <tr>
+            <th>用户名：</th>
             <th>联系方式：</th>
             <th>地址：</th>
             <th>数量：</th>
@@ -43,6 +26,7 @@
         <tbody>
         {% for order in orders %}
             <tr>
+                 <td>{{ order['username'] }}</td>
                 <td>{{ order['phone'] }}</td>
                 <td>{{ order['address'] }}</td>
                 <td>{{ order['amount'] }}</td>
@@ -51,6 +35,9 @@
                 <td>
                     {% if order['status'] == 0 %}
                         <a href="/cancel?id={{ order['_id'] }}">取消</a>
+                        <a href="/accept?id={{ order['_id'] }}">接收</a>
+                    {% elif order['status'] == 1 %}
+                        <a href="/success?id={{ order['_id'] }}">成功</a>
                     {% endif %}
                 </td>
             </tr>
