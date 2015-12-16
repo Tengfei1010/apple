@@ -35,7 +35,7 @@
             <th>联系方式：</th>
             <th>地址：</th>
             <th>数量：</th>
-            <th>类型：</th>
+            <th>总价：</th>
             <th>状态：</th>
             <th>操作：</th>
         </tr>
@@ -48,17 +48,15 @@
                 <td>
                     {% for key in order['amount'] %}
                         {% if key == 'quantity1' %}
-                        包装1： {{ order['amount'][key] }} ;
+                        6 元装： {{ order['amount'][key] }} ;
                         {% elif key == 'quantity2' %}
-                        包装2： {{ order['amount'][key] }} ;
+                        7元装： {{ order['amount'][key] }} ;
                         {% elif key == 'quantity3' %}
-                        包装3： {{ order['amount'][key] }} ;
-                        {% else %}
-                        包装4： {{ order['amount'][key] }} ;
+                        8 元装： {{ order['amount'][key] }} ;
                         {% endif %}
                     {% endfor %}
                 </td>
-                <td>{{ order['type'] }}</td>
+                <td>{{ order['total'] }}</td>
                 <td>{{ order['status_txt'] }}</td>
                 <td>
                     {% if order['status'] == 0 %}

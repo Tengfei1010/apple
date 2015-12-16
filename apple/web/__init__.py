@@ -77,10 +77,10 @@ def order():
         quantity1 = request.form.get('quantity1', None)
         quantity2 = request.form.get('quantity2', None)
         quantity3 = request.form.get('quantity3', None)
-        quantity4 = request.form.get('quantity4', None)
+        total = request.form.get('total', 0)
 
-        if not (quantity1 and quantity2 and quantity3 and quantity4):
-            return render_template('do_order.html', error_msg=u'类型数量不能为零！')
+        if not (quantity1 and quantity2 and quantity3):
+            return render_template('do_order.html', error_msg=u'至少选择一项商品！')
         if not phone or not address:
             return render_template('do_order.html', error_msg=u'所有项必填！')
 
@@ -91,8 +91,6 @@ def order():
             amount['quantity2'] = quantity2
         if quantity3 or quantity3 == '0':
             amount['quantity3'] = quantity3
-        if quantity4 or quantity4 == '0':
-            amount['quantity4'] = quantity4
         # save order to db
         save_value = {
             'username': current_user.username,
@@ -100,6 +98,7 @@ def order():
             'phone': phone,
             'address': address,
             'amount': amount,
+            'total' : total,
             'status': STATUS['created']
         }
         save_result = session.insert_one(ORDER_COLLECTION, save_value)
